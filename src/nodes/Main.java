@@ -31,9 +31,7 @@ public class Main extends Script implements MessageListener {
         manager.addNode(new WithdrawFromBank(this));
         manager.addNode(new TradeGpOver(this));
         manager.addNode(new JoinCc(this));
-
-
-
+        manager.addNode(new HopWorld(this));
     }
 
 

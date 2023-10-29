@@ -7,9 +7,15 @@ import Framework.Sleep;
 import org.osbot.rs07.api.Bank;
 import org.osbot.rs07.script.MethodProvider;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @PrioritisedNode(priority = Priority.FOUR)
 public class WithdrawFromBank extends Node {
 
+    private List<String> itemList = new ArrayList<>(Arrays.asList("Cosmic rune", "Law rune", "Nature rune", "Chaos rune","Death rune", "Coins", "Uncut diamond", "Diamond",
+            "Blood rune", "Air rune", "Earth rune", "Water rune"));
 
     public WithdrawFromBank(MethodProvider api) {
         super(api);
@@ -17,7 +23,7 @@ public class WithdrawFromBank extends Node {
 
     @Override
     public boolean canExecute() throws InterruptedException {
-        return AreasAndPositions.feroxArea.contains(api.myPosition()) && bankContainsItemsToWithdraw();
+        return AreasAndPositions.duelArenaArea.contains(api.myPosition()) && bankContainsItemsToWithdraw();
     }
 
     @Override
@@ -28,23 +34,28 @@ public class WithdrawFromBank extends Node {
                 Sleep.sleepUntil(() -> api.getBank().isOpen(), 3000);
             }
         } else {
-            withdrawFromBank("Cosmic rune");
-            withdrawFromBank("Law rune");
-            withdrawFromBank("Nature rune");
-            withdrawFromBank("Coins");
-            if (api.getBank().contains("Uncut diamond", "Diamond")) {
-                if (api.getBank().enableMode(Bank.BankMode.WITHDRAW_NOTE)) {
-                    withdrawFromBank("Uncut diamond");
-                    withdrawFromBank("Diamond");
+            if (api.getBank().getWithdrawMode().equals(Bank.BankMode.WITHDRAW_NOTE)) {
+                for(String itemName: itemList){
+                    withdrawFromBank(itemName);
+                }
+            } else{
+                if(api.getBank().enableMode(Bank.BankMode.WITHDRAW_NOTE)){
+                    api.log("Enabled withdraw as note");
+                    Sleep.sleepUntil(() -> api.getBank().getWithdrawMode().equals(Bank.BankMode.WITHDRAW_NOTE), 3000);
                 }
             }
+
         }
         return 500;
     }
 
     private boolean bankContainsItemsToWithdraw() {
-        //api.log("Bank contains Cosmic rune: "+api.getBank().contains("Cosmic rune") + api.getBank().contains("Law rune") + api.getBank().contains("Nature rune") + api.getBank().contains("Coins"));
-        return api.getBank().contains("Cosmic rune") || api.getBank().contains("Law rune") || api.getBank().contains("Nature rune") || api.getBank().contains("Coins");
+       for(String itemName: itemList){
+           if(api.getBank().contains(itemName)){
+               return true;
+           }
+       }
+       return false;
     }
 
     private boolean withdrawFromBank(String itemName) {
