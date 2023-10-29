@@ -11,7 +11,7 @@ import java.util.List;
 @PrioritisedNode(priority = Priority.ONE)
 public class TradeGpOver extends Node {
     ClanChatter cc;
-    private List<String> rsnList = new ArrayList<>(Arrays.asList("weak ass kid", "Propadinga", "return bor", "Shod Chris"));
+    private List<String> rsnList = new ArrayList<>(Arrays.asList("weak ass kid", "Propadinga", "return bor", "Shod Chris", "Mint Asa"));
     private List<String> itemList = new ArrayList<>(Arrays.asList("Cosmic rune", "Law rune", "Nature rune", "Chaos rune","Death rune", "Coins", "Uncut diamond", "Diamond",
         "Blood rune", "Air rune", "Earth rune", "Water rune"));
     public TradeGpOver(MethodProvider api) {
