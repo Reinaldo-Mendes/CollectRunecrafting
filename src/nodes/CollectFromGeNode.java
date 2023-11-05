@@ -20,7 +20,7 @@ public class CollectFromGeNode extends Node {
 
     @Override
     public boolean canExecute() throws InterruptedException {
-        return (AreasAndPositions.feroxArea.contains(api.myPosition()) || isBankNearby()) && !hasCollected;
+        return (AreasAndPositions.duelArenaArea.contains(api.myPosition()) || isBankNearby()) && !hasCollected;
     }
 
     @Override
@@ -38,7 +38,12 @@ public class CollectFromGeNode extends Node {
             if(api.getNpcs().closest("Banker") != null){
                 if(api.getNpcs().closest("Banker").interact("Collect")){
                     Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
-
+                }
+            } else{
+                if(api.getObjects().closest("Open chest") != null){
+                    if(api.getObjects().closest("Open chest").interact("Collect")){
+                        Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
+                    }
                 }
             }
         } else{

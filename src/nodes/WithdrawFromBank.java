@@ -23,7 +23,8 @@ public class WithdrawFromBank extends Node {
 
     @Override
     public boolean canExecute() throws InterruptedException {
-        return AreasAndPositions.duelArenaArea.contains(api.myPosition()) && bankContainsItemsToWithdraw();
+        return AreasAndPositions.duelArenaArea.contains(api.myPosition()) && !inventoryContainsItems() && bankContainsItemsToWithdraw()
+                && !tradeContainsItems();
     }
 
     @Override
@@ -32,6 +33,7 @@ public class WithdrawFromBank extends Node {
         if (!api.getBank().isOpen()) {
             if (api.getBank().open()) {
                 Sleep.sleepUntil(() -> api.getBank().isOpen(), 3000);
+                return 50;
             }
         } else {
             if (api.getBank().getWithdrawMode().equals(Bank.BankMode.WITHDRAW_NOTE)) {
@@ -56,6 +58,24 @@ public class WithdrawFromBank extends Node {
            }
        }
        return false;
+    }
+
+    private boolean inventoryContainsItems(){
+        for(String itemName: itemList){
+            if(api.getInventory().contains(itemName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean tradeContainsItems(){
+        for(String itemName: itemList){
+            if(api.getTrade().getOurOffers().contains(itemName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean withdrawFromBank(String itemName) {
