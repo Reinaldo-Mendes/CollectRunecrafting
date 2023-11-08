@@ -37,7 +37,12 @@ public class CollectFromGeNode extends Node {
             if(api.getNpcs().closest("Banker") != null){
                 if(api.getNpcs().closest("Banker").interact("Collect")){
                     Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
-
+                }
+            } else{
+                if(api.getObjects().closest("Open chest") != null){
+                    if(api.getObjects().closest("Open chest").interact("Collect")){
+                        Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
+                    }
                 }
             }
             if(api.getObjects().closest(f -> f.hasAction("Collect")) != null){
