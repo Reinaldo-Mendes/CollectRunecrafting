@@ -32,6 +32,7 @@ public class Main extends Script implements MessageListener {
         manager.addNode(new TradeGpOver(this));
         manager.addNode(new JoinCc(this));
         manager.addNode(new HopWorld(this));
+        manager.addNode(new WalkToDuelBank(this));
     }
 
 

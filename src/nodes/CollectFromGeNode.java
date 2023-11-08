@@ -20,7 +20,7 @@ public class CollectFromGeNode extends Node {
 
     @Override
     public boolean canExecute() throws InterruptedException {
-        return (AreasAndPositions.feroxArea.contains(api.myPosition()) || isBankNearby()) && !hasCollected;
+        return (AreasAndPositions.duelArenaArea.contains(api.myPosition()) || isBankNearby()) && !hasCollected;
     }
 
     @Override
@@ -33,12 +33,16 @@ public class CollectFromGeNode extends Node {
         }
 
         RS2Widget collectToBankWidget = api.getWidgets().get(402, 4); //This is the widget for the "Collect to bank" on the collect screen
-
         if(!isWidgetVisible(collectToBankWidget)){
             if(api.getNpcs().closest("Banker") != null){
                 if(api.getNpcs().closest("Banker").interact("Collect")){
                     Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
 
+                }
+            }
+            if(api.getObjects().closest(f -> f.hasAction("Collect")) != null){
+                if(api.getObjects().closest(f -> f.hasAction("Collect")).interact("Collect")){
+                    Sleep.sleepUntil(() -> isWidgetVisible(collectToBankWidget), 3000);
                 }
             }
         } else{
@@ -61,10 +65,11 @@ public class CollectFromGeNode extends Node {
     }
 
     private boolean isBankNearby() {
-        RS2Object bankChest = api.getObjects().closest("Bank chest");
+        //RS2Object bankChest = api.getObjects().closest("Bank chest");
+        RS2Object openChest = api.getObjects().closest("Open chest");
         NPC banker = api.getNpcs().closest("Banker");
-        if (bankChest != null) {
-            if (bankChest.exists() && api.getMap().distance(bankChest) <= 13) {
+        if (openChest != null) {
+            if (api.getMap().distance(openChest) <= 13) {
                 return true;
             }
         }

@@ -15,7 +15,7 @@ import java.util.List;
 public class WithdrawFromBank extends Node {
 
     private List<String> itemList = new ArrayList<>(Arrays.asList("Cosmic rune", "Law rune", "Nature rune", "Chaos rune","Death rune", "Coins", "Uncut diamond", "Diamond",
-            "Blood rune", "Air rune", "Earth rune", "Water rune"));
+            "Air rune", "Earth rune", "Water rune"));
 
     public WithdrawFromBank(MethodProvider api) {
         super(api);

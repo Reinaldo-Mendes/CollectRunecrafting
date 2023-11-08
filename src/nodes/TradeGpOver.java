@@ -45,7 +45,7 @@ public class TradeGpOver extends Node {
                         }
                     } else{
                         if (api.getTrade().isFirstInterfaceOpen()) {
-                            api.getTrade().offerAll(rsnList.toString());
+                            //api.getTrade().offerAll(rsnList.toString());
                             //if (api.getTrade().offerAll("Cosmic rune", "Law rune", "Nature rune", "Chaos rune","Death rune", "Coins", "Uncut diamond", "Diamond")) {
                             for(String itemName: itemList){
                                 if(api.getTrade().offerAll(itemName)){
@@ -55,13 +55,6 @@ public class TradeGpOver extends Node {
                             if (api.getTrade().acceptTrade()) {
                                 Sleep.sleepUntil(() -> api.getTrade().isSecondInterfaceOpen(), 2000);
                             }
-                            /*if(api.getTrade().offerAll(itemList.toString())){
-                                Sleep.sleepUntil(() -> !api.getInventory().contains("Cosmic rune") && !api.getInventory().contains("Coins") && !api.getInventory().contains("Law rune") && !api.getInventory().contains("Nature rune") &&
-                                        !api.getInventory().contains("Uncut diamond") && !api.getInventory().contains("Diamond"), 3000);
-                                if (api.getTrade().acceptTrade()) {
-                                    Sleep.sleepUntil(() -> api.getTrade().isSecondInterfaceOpen(), 2000);
-                                }
-                            }*/
                         }
                         if (api.getTrade().isSecondInterfaceOpen()) {
                             if (api.getTrade().acceptTrade()) {
@@ -90,12 +83,6 @@ public class TradeGpOver extends Node {
 
     private boolean ourOfferContainsItems() {
         if (api.getTrade().getOurOffers() != null) {
-            /*
-            if (api.getTrade().getOurOffers().contains("Cosmic rune") || api.getTrade().getOurOffers().contains("Coins") || api.getTrade().getOurOffers().contains("Law rune") ||
-            api.getTrade().getOurOffers().contains("Nature rune")) {
-                return true;
-            }*/
-
             for(String itemName: itemList){
                 if(api.getTrade().getOurOffers().contains(itemName)){
                     return true;
